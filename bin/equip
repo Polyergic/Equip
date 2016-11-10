@@ -14,6 +14,7 @@ pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
 ### Check for a compatible platform
 RELPATH="bin/platform"
 curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs
+chmod +x "$RELPATH"
 PLATFORM=`bin/platform`
 case "$PLATFORM"
 	"MacOS")
