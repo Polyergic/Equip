@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+case `uname` in
+	"Darwin")
+		platform="MacOS"
+		;;
+	"Linux")
+		platform="Linux"
+		;;
+	"CYGWIN_NT-6.3"|"CYGWIN_NT-10.0")
+		platform="Cygwin"
+		;;
+	*)
+		platform="unknown"
+		;;
+esac
+
+echo "$platform"
