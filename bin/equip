@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 ### Yes we hardcode variables
-
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="~/tmp/shellac-equip-bootstrap/"
 
-### TODO: check for existance of /usr/bin/env, bash, etc...
+### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
 ### Get into bootstrap dir
 mkdir -p "$BOOTSTRAP"
@@ -15,8 +14,8 @@ pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
 RELPATH="bin/platform"
 curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs
 chmod +x "$RELPATH"
-PLATFORM=`bin/platform`
-case "$PLATFORM"
+PLATFORM=`$RELPATH`
+case "$PLATFORM" in
 	"MacOS")
 		echo "UNIMPLEMENTED: equip shell under MacOS"
 		;;
