@@ -1,3 +1,29 @@
 #!/usr/bin/env bash
 
-echo "UNIMPLEMENTED: equip this shell with Polyergic's Accoutrements"
+### Yes we hardcode variables
+
+GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
+BOOTSTRAP="~/tmp/shellac-equip-bootstrap/"
+
+### TODO: check for existance of /usr/bin/env, bash, etc...
+
+### Get into bootstrap dir
+mkdir -p "$BOOTSTRAP"
+pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
+
+### Check for a compatible platform
+RELPATH="bin/platform"
+curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs
+PLATFORM=`bin/platform`
+case "$PLATFORM"
+	"MacOS")
+		echo "UNIMPLEMENTED: equip shell under MacOS"
+		;;
+	*)
+		echo "FAILED!:  Unsupported platform $PLATFORM"
+		;;
+esac
+
+### Cleanup
+popd ## todo: hide output & test for failure
+rm -rf "$BOOTSTRAP"
