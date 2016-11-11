@@ -24,3 +24,30 @@
   Changes needed:
   - query to find current version (for URL and pkg name)
   - detect mountpoint when mounting image & unmount accordingly 
+
+# Paths
+A weak suggestion for an FHS-like allocation of paths in $HOME
+
+- `~/bin` - executable commands
+
+- `~/lib` - library code used by commands in ~/bin
+
+- `~/etc` - configurations
+
+- `~/var` - persistent state information (not necessarily safe to delete)
+
+- `~/tmp` - transient state information (safe to delete)
+
+- `~/hosts/$HOSTNAME/$above` - host-specific variants of above
+
+**Note contrast with other implementations**
+
+- XDG Desktop pathes
+ 
+  https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#basics
+   
+  - Single hidden dir is better than hidden dir per tool
+
+  - Does not separate config from state
+
+  - No mechanism for multiple hosts
