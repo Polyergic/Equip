@@ -11,12 +11,34 @@ mkdir -p "$BOOTSTRAP"
 pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
 
 ### Check for a compatible platform
+## TODO: function for fetching & calling (only fetch if not present)
 RELPATH="bin/platform"
 curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs
 chmod +x "$RELPATH"
 PLATFORM=`$RELPATH`
 case "$PLATFORM" in
 	"MacOS")
+		## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
+		PORTVERSION="2.3.4"
+		## get OS version
+		RELPATH="bin/mac/version"
+		curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs
+		chmod +x "$RELPATH"
+		OSVERSION=`$RELPATH 2`
+		## get OS name
+		RELPATH="bin/mac/flavor"
+		curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs
+		chmod +x "$RELPATH"
+		OSVERSION=`$RELPATH`
+		## construct URL
+		PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
+		PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
+		## fetch installer package
+		curl "$PKGURL" --output "$PORTPKG"
+		## TODO: check signature in "$PKGURL.asc"
+		sudo installer -verbose -pkg "$PORTPKG"
+		sudo port -v selfupdate
+		## TODO: Install default list of ports
 		echo "UNIMPLEMENTED: equip shell under MacOS"
 		;;
 	*)
