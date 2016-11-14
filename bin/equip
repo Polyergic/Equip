@@ -4,48 +4,51 @@
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="~/tmp/shellac-equip-bootstrap/"
 
-### TODO: check for existance of /usr/bin/env, bash, curl, etc...
+function main {
+	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
-### Get into bootstrap dir
-mkdir -p "$BOOTSTRAP"
-pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
+	### Get into bootstrap dir
+	mkdir -p "$BOOTSTRAP"
+	pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
 
-### Check for a compatible platform
-## TODO: function for fetching & calling (only fetch if not present)
-RELPATH="bin/platform"
-curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -#
-chmod +x "$RELPATH"
-PLATFORM=`$RELPATH`
-case "$PLATFORM" in
-	"MacOS")
-		## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
-		PORTVERSION="2.3.4"
-		## get OS version
-		RELPATH="bin/mac/version"
-		curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -#
-		chmod +x "$RELPATH"
-		OSVERSION=`$RELPATH 2`
-		## get OS name
-		RELPATH="bin/mac/flavor"
-		curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -#
-		chmod +x "$RELPATH"
-		OSVERSION=`$RELPATH`
-		## construct URL
-		PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
-		PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
-		## fetch installer package
-		curl "$PKGURL" --output "$PORTPKG" -#
-		## TODO: check signature in "$PKGURL.asc"
-		sudo installer -verbose -pkg "$PORTPKG" -target /
-		sudo port -v selfupdate
-		## TODO: Install default list of ports
-		echo "UNIMPLEMENTED: equip shell under MacOS"
-		;;
-	*)
-		echo "FAILED!:  Unsupported platform $PLATFORM"
-		;;
-esac
+	### Check for a compatible platform
+	PLATFORM=`remote bin/platform`
+	case "$PLATFORM" in
+		"MacOS")
+			## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
+			PORTVERSION="2.3.4"
+			## get OS version
+			OSVERSION=`remote bin/mac/version 2`
+			## get OS name
+			OSNAME=`remote bin/mac/flavor`
+			## construct URL
+			PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
+			PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
+			## fetch installer package
+			curl "$PKGURL" --output "$PORTPKG" -#
+			## TODO: check signature in "$PKGURL.asc"
+			sudo installer -verbose -pkg "$PORTPKG" -target /
+			sudo port -v selfupdate
+			## TODO: Install default list of ports
+			echo "UNIMPLEMENTED: equip shell under MacOS"
+			;;
+		*)
+			echo "FAILED!:  Unsupported platform $PLATFORM"
+			;;
+	esac
 
-### Cleanup
-popd ## todo: hide output & test for failure
-rm -rf "$BOOTSTRAP"
+	### Cleanup
+	popd ## todo: hide output & test for failure
+	rm -rf "$BOOTSTRAP"
+}
+
+function remote {
+	RELPATH="$1"
+	## TODO: only fetch if not present
+	curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -#
+	chmod +x "$RELPATH"
+	shift
+	$RELPATH "$@"
+}
+
+main
