@@ -4,6 +4,9 @@
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="~/tmp/shellac-equip-bootstrap/"
 
+set -e
+set -E
+
 function main {
 	echo "=============================================================================="
 	echo
@@ -62,7 +65,7 @@ function remote {
 
 function failout {
 	echo "$1" >&2
-	exit
+	exit 99
 }
 
 main
