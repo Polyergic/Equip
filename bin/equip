@@ -4,13 +4,13 @@
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
 set -eE
-exec 3>&1 ## make stdout available in captured functions
+exec 3>&1 ## make stdout available in `captured` functions
 
 function main {
 	echo "=============================================================================="
-	echo
-	echo "Attempting to equip this shell..."
-	echo
+	echo " ====="
+	echo " =====    Attempting to equip this shell with "
+	echo " ====="
 	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
 	### Get into bootstrap dir
@@ -22,6 +22,7 @@ function main {
 	PLATFORM=`remote bin/platform`
 	case "$PLATFORM" in
 		"MacOS")
+			## TODO: only install macports if not already installed (or needs reinstall for OS update)
 			## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
 			PORTVERSION="2.3.4"
 			## get OS version
