@@ -2,30 +2,33 @@
 
 ver=`sw_vers -productVersion`
 #echo "ver=$ver"
-mapfile -t array < <(echo $ver | tr "." "\n")
+## MacOS builtin bash does not support mapfile!
+## mapfile -t array < <(echo $ver | tr "." "\n")
+## but BASH default is to use line separators
+array=($(echo $ver | tr "." "\n"))
 #echo "array[0]=${array[0]}"
 if [ "3" == "${#array[@]}" -a "${array[0]}" == "10" ]; then
-	#echo "array[1]=${array[1]}"
-	case "${array[1]}" in
-		0) name="Cheetah";;
-		1) name="Puma";;
-		2) name="Jaguar";;
-		3) name="Panther";;
-		4) name="Tiger";;
-		5) name="Leopard";;
-		6) name="Snow Leopard";;
-		7) name="Lion";;
-		8) name="Mountian Lion";;
-		9) name="Mavericks";;
-		10) name="Yosemite";;
-		11) name="El Capitan";;
-		12) name="Sierra";;
-		*)
-			echo "ERROR: unknown Mac OS Version $ver"
-			name="$ver"
-	esac
+        #echo "array[1]=${array[1]}"
+        case "${array[1]}" in
+                0) name="Cheetah";;
+                1) name="Puma";;
+                2) name="Jaguar";;
+                3) name="Panther";;
+                4) name="Tiger";;
+                5) name="Leopard";;
+                6) name="Snow Leopard";;
+                7) name="Lion";;
+                8) name="Mountian Lion";;
+                9) name="Mavericks";;
+                10) name="Yosemite";;
+                11) name="El Capitan";;
+                12) name="Sierra";;
+                *)
+                        echo "ERROR: unknown Mac OS Version $ver"
+                        name="$ver"
+        esac
 else
-	echo "ERROR: unknown Mac OS Version $ver"
-	name="$ver"
+        echo "ERROR: unknown Mac OS Version $ver"
+        name="$ver"
 fi
 echo $name
