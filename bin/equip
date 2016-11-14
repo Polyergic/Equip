@@ -32,9 +32,14 @@ function main {
 			PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
 			PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
 			## fetch installer package
+			echo " ----- retrieving MacPorts installer: $PORTPKG from $PKGURL"
 			curl "$PKGURL" --output "$PORTPKG" -#
 			## TODO: check signature in "$PKGURL.asc"
+			echo " ----- running MacPorts installer (may require Administrator password)"
 			sudo installer -verbose -pkg "$PORTPKG" -target /
+			## TODO: check for installation errors
+			PATH="/opt/local/bin:$PATH"
+			echo " ----- running MacPorts selfupdate routine (may require Administrator password)"
 			sudo port -v selfupdate
 			## TODO: Install default list of ports
 			echo "UNIMPLEMENTED: equip shell under MacOS"
