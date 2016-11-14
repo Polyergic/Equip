@@ -4,6 +4,7 @@
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
 set -eE
+exec 3>&1 ## make stdout available in captured functions
 
 function main {
 	echo "=============================================================================="
@@ -53,7 +54,7 @@ function remote {
 	## TODO: if present, check for out of date
 	if [ ! -x "$RELPATH" ]; then
 		URL="$GITHUB""$RELPATH"
-		echo " ----- retrieving $RELPATH from $URL"
+		echo " ----- retrieving $RELPATH from $URL" >&3
 		curl "$URL" --output "$RELPATH" --create-dirs -# -f
 		if [ ! -f "$RELPATH" ]; then
 			failout " ========== FAILURE: unable to retrieve $RELPATH from $URL"
