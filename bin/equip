@@ -36,7 +36,7 @@ case "$PLATFORM" in
 		## fetch installer package
 		curl "$PKGURL" --output "$PORTPKG" -#
 		## TODO: check signature in "$PKGURL.asc"
-		sudo installer -verbose -pkg "$PORTPKG"
+		sudo installer -verbose -pkg "$PORTPKG" -target /
 		sudo port -v selfupdate
 		## TODO: Install default list of ports
 		echo "UNIMPLEMENTED: equip shell under MacOS"
