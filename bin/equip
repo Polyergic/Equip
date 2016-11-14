@@ -26,6 +26,7 @@ function main {
 	case "$PLATFORM" in
 		"MacOS")
 			## TODO: only install macports if not already installed (or needs reinstall for OS update)
+			## MacPorts installation method adapted from https://excitedcuriosity.wordpress.com/2007/08/17/installing-macports-from-the-command-line/
 			## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
 			PORTVERSION="2.3.4"
 			## get OS version
