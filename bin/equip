@@ -15,6 +15,7 @@ function main {
 	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
 	### Get into bootstrap dir
+	echo " ----- bootstrapping from $BOOTSTRAP"
 	mkdir -p "$BOOTSTRAP"
 	pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
 
@@ -54,6 +55,7 @@ function remote {
 	## TODO: only fetch if not present
 	if [ ! -x "$RELPATH" ]; then
 		URL="$GITHUB""$RELPATH"
+		echo " ----- retrieving $RELPATH from $URL"
 		curl "$URL" --output "$RELPATH" --create-dirs -# -f
 		if [ ! -f "$RELPATH" ]; then
 			failout " ========== FAILURE: unable to retrieve $RELPATH from $URL"
