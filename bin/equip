@@ -10,9 +10,10 @@ exec 3>&1 ## make stdout available in `captured` functions
 
 function main {
 	echo "=============================================================================="
-	echo "=========="
-	echo "==========     Shell Accoutrements: Attempting to equip this shell..."
-	echo "=========="
+	echo "==============="
+	echo "===============     Shell Accoutrements: Attempting to equip this shell..."
+	echo "==============="
+	echo "=============================================================================="
 	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
 	### Get into bootstrap dir
@@ -38,12 +39,16 @@ function main {
 			echo "$STATUSPREFIX retrieving MacPorts installer: $PORTPKG from $PKGURL"
 			curl "$PKGURL" --output "$PORTPKG" -#
 			## TODO: check signature in "$PKGURL.asc"
+			echo "$STATUSPREFIX"
 			echo "$STATUSPREFIX running MacPorts installer (may require Administrator password)"
-			sudo installer -verbose -pkg "$PORTPKG" -target /
+			echo "$STATUSPREFIX"
+			sudo installer -pkg "$PORTPKG" -target /
 			## TODO: check for installation errors
 			PATH="/opt/local/bin:$PATH"
+			echo "$STATUSPREFIX"
 			echo "$STATUSPREFIX running MacPorts selfupdate routine (may require Administrator password)"
-			sudo port -v selfupdate
+			echo "$STATUSPREFIX"
+			sudo port selfupdate
 			## TODO: Install default list of ports
 			failout "UNIMPLEMENTED: equip shell under MacOS"
 			;;
@@ -74,7 +79,9 @@ function remote {
 }
 
 function failout {
+	echo "$ERRORPREFIX"
 	echo "$ERRORPREFIX $1" >&2
+	echo "$ERRORPREFIX"
 	exit 99
 }
 
