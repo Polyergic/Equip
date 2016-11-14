@@ -6,7 +6,10 @@ function join_by { local IFS="$1"; shift; echo "$*"; }
 ver=`sw_vers -productVersion`
 #echo "ver=$ver"
 if [ "" != "$1" ]; then
-        mapfile -t array < <(echo $ver | tr "." "\n")
+        ## MacOS builtin bash does not support mapfile!
+        ## mapfile -t array < <(echo $ver | tr "." "\n")
+        ## but BASH default is to use line separators
+        array=($(echo $ver | tr "." "\n"))
         #echo "length: ${#array[@]}"
         if [ "$1" -lt "${#array[@]}" -a "$1" -gt "0" ]; then
                 #echo "slice to: $1"
@@ -15,4 +18,4 @@ if [ "" != "$1" ]; then
                 ver=`join_by "." "${slice[@]}"`
         fi
 fi
-echo $ver 
+echo $ver
