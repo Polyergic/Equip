@@ -7,3 +7,8 @@ Once implemented, you'll be able to "equip" your shell with this command:
 
     curl https://raw.githubusercontent.com/Polyergic/Shellacc/master/bin/equip -# -f | bash
 
+## Current Status:
+
+### MacOS
+
+Installs [MacPorts](https://www.macports.org/)
