@@ -3,18 +3,20 @@
 ### Yes we hardcode variables
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
+STATUSPREFIX=" --------------- "
+ERRORPREFIX=" =============== "
 set -eE
 exec 3>&1 ## make stdout available in `captured` functions
 
 function main {
 	echo "=============================================================================="
-	echo " ====="
-	echo " =====    Attempting to equip this shell with "
-	echo " ====="
+	echo "=========="
+	echo "==========     Shell Accoutrements: Attempting to equip this shell..."
+	echo "=========="
 	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
 	### Get into bootstrap dir
-	echo " ----- bootstrapping from $BOOTSTRAP"
+	echo "$STATUSPREFIX bootstrapping from $BOOTSTRAP"
 	mkdir -p "$BOOTSTRAP"
 	pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
 
@@ -33,20 +35,20 @@ function main {
 			PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
 			PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
 			## fetch installer package
-			echo " ----- retrieving MacPorts installer: $PORTPKG from $PKGURL"
+			echo "$STATUSPREFIX retrieving MacPorts installer: $PORTPKG from $PKGURL"
 			curl "$PKGURL" --output "$PORTPKG" -#
 			## TODO: check signature in "$PKGURL.asc"
-			echo " ----- running MacPorts installer (may require Administrator password)"
+			echo "$STATUSPREFIX running MacPorts installer (may require Administrator password)"
 			sudo installer -verbose -pkg "$PORTPKG" -target /
 			## TODO: check for installation errors
 			PATH="/opt/local/bin:$PATH"
-			echo " ----- running MacPorts selfupdate routine (may require Administrator password)"
+			echo "$STATUSPREFIX running MacPorts selfupdate routine (may require Administrator password)"
 			sudo port -v selfupdate
 			## TODO: Install default list of ports
-			echo "UNIMPLEMENTED: equip shell under MacOS"
+			failout "UNIMPLEMENTED: equip shell under MacOS"
 			;;
 		*)
-			echo "FAILED!:  Unsupported platform $PLATFORM"
+			failout "FAILED!:  Unsupported platform $PLATFORM"
 			;;
 	esac
 
@@ -60,10 +62,10 @@ function remote {
 	## TODO: if present, check for out of date
 	if [ ! -x "$RELPATH" ]; then
 		URL="$GITHUB""$RELPATH"
-		echo " ----- retrieving $RELPATH from $URL" >&3
+		echo "$STATUSPREFIX retrieving $RELPATH from $URL" >&3
 		curl "$URL" --output "$RELPATH" --create-dirs -# -f
 		if [ ! -f "$RELPATH" ]; then
-			failout " ========== FAILURE: unable to retrieve $RELPATH from $URL"
+			failout "FAILURE: unable to retrieve $RELPATH from $URL"
 		fi
 		chmod +x "$RELPATH"
 	fi
@@ -72,7 +74,7 @@ function remote {
 }
 
 function failout {
-	echo "$1" >&2
+	echo "$ERRORPREFIX $1" >&2
 	exit 99
 }
 
