@@ -5,7 +5,10 @@ GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="~/tmp/shellac-equip-bootstrap/"
 
 function main {
+	echo "=============================================================================="
+	echo
 	echo "Attempting to equip this shell..."
+	echo
 	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
 
 	### Get into bootstrap dir
@@ -46,10 +49,20 @@ function main {
 function remote {
 	RELPATH="$1"
 	## TODO: only fetch if not present
-	curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -# -f
-	chmod +x "$RELPATH"
+	if [ ! -x "$RELPATH" ]; then
+		curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -# -f
+		if [ ! -f "$RELPATH" ]; then
+			failout " ========== FAILURE: unable to retrieve $RELPATH"
+		fi
+		chmod +x "$RELPATH"
+	fi;
 	shift
 	$RELPATH "$@"
+}
+
+function failout {
+	echo "$1" >&2
+	exit
 }
 
 main
