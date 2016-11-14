@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+## From http://stackoverflow.com/a/17841619/776723
+function join_by { local IFS="$1"; shift; echo "$*"; }
+
+ver=`sw_vers -productVersion`
+#echo "ver=$ver"
+if [ "" != "$1" ]; then
+        mapfile -t array < <(echo $ver | tr "." "\n")
+        #echo "length: ${#array[@]}"
+        if [ "$1" -lt "${#array[@]}" -a "$1" -gt "0" ]; then
+                #echo "slice to: $1"
+                slice=("${array[@]:0:$1}")
+                #echo "length: ${#slice[@]}"
+                ver=`join_by "." "${slice[@]}"`
+        fi
+fi
+echo $ver 
