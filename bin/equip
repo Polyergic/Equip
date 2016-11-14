@@ -53,9 +53,10 @@ function remote {
 	RELPATH="$1"
 	## TODO: only fetch if not present
 	if [ ! -x "$RELPATH" ]; then
-		curl "$GITHUB""$RELPATH" --output "$RELPATH" --create-dirs -# -f
+		URL="$GITHUB""$RELPATH"
+		curl "$URL" --output "$RELPATH" --create-dirs -# -f
 		if [ ! -f "$RELPATH" ]; then
-			failout " ========== FAILURE: unable to retrieve $RELPATH"
+			failout " ========== FAILURE: unable to retrieve $RELPATH from $URL"
 		fi
 		chmod +x "$RELPATH"
 	fi;
