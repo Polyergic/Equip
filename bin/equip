@@ -2,10 +2,8 @@
 
 ### Yes we hardcode variables
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
-BOOTSTRAP="~/tmp/shellac-equip-bootstrap/"
-
-set -e
-set -E
+BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
+set -eE
 
 function main {
 	echo "=============================================================================="
@@ -52,7 +50,7 @@ function main {
 
 function remote {
 	RELPATH="$1"
-	## TODO: only fetch if not present
+	## TODO: if present, check for out of date
 	if [ ! -x "$RELPATH" ]; then
 		URL="$GITHUB""$RELPATH"
 		echo " ----- retrieving $RELPATH from $URL"
@@ -61,7 +59,7 @@ function remote {
 			failout " ========== FAILURE: unable to retrieve $RELPATH from $URL"
 		fi
 		chmod +x "$RELPATH"
-	fi;
+	fi
 	shift
 	$RELPATH "$@"
 }
