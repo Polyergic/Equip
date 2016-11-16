@@ -7,7 +7,7 @@ ver=`sw_vers -productVersion`
 ## but BASH default is to use line separators
 array=($(echo $ver | tr "." "\n"))
 #echo "array[0]=${array[0]}"
-if [ "3" == "${#array[@]}" -a "${array[0]}" == "10" ]; then
+if [ "2" -le "${#array[@]}" -a "${array[0]}" == "10" ]; then
         #echo "array[1]=${array[1]}"
         case "${array[1]}" in
                 0) name="Cheetah";;
