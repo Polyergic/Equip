@@ -25,6 +25,8 @@ function main {
 	PLATFORM=`remote bin/platform`
 	case "$PLATFORM" in
 		"MacOS")
+			echo "$STATUSPREFIX enabling developer tools (may require Administrator password)"
+			sudo xcodebuild -license accept
 			## TODO: only install macports if not already installed (or needs reinstall for OS update)
 			## MacPorts installation method adapted from https://excitedcuriosity.wordpress.com/2007/08/17/installing-macports-from-the-command-line/
 			## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
