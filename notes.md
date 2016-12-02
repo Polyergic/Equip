@@ -37,6 +37,8 @@ A weak suggestion for an FHS-like allocation of paths in $HOME
 
 - `~/lib` - library code used by commands in ~/bin
 
+- `~/lib/$name/data` - static data used by the $name library
+
 - `~/etc` - configurations
 
 - `~/var` - persistent state information (not necessarily safe to delete)
