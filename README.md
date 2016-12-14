@@ -12,7 +12,7 @@ This is an eclectic set of commands, settings, and configurations that I use on 
 
 Once implemented, you'll be able to "equip" almost any bash shell using this command:
 
-    curl https://raw.githubusercontent.com/Polyergic/Shellacc/master/bin/equip -# -f | bash
+    curl -f -# https://raw.githubusercontent.com/Polyergic/Shellacc/master/bin/equip | bash
 
 Someday you'll be able to selectively apply the settings and configurations you want to adopt.
 

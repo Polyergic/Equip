@@ -26,31 +26,36 @@ function main {
 	case "$PLATFORM" in
 		"MacOS")
 
+			## TODO: skip if developer tools already enabled
 			echo "$STATUSPREFIX Enabling developer tools (installer runs as a GUI app; may require Administrator password)"
 			## TODO: do this non-interactively
 			xcodebuild -license accept
 
-			## TODO: only install macports if not already installed (or needs reinstall for OS update)
-			## MacPorts installation method adapted from https://excitedcuriosity.wordpress.com/2007/08/17/installing-macports-from-the-command-line/
-			## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
-			PORTVERSION="2.3.4"
-			## get OS version
-			OSVERSION=`remote bin/mac/version 2`
-			## get OS name
-			OSNAME=`remote bin/mac/flavor`
-			## construct URL
-			PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
-			PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
-			## fetch installer package
-			echo "$STATUSPREFIX retrieving MacPorts installer: $PORTPKG from $PKGURL"
-			curl "$PKGURL" --output "$PORTPKG" -#
-			## TODO: check signature in "$PKGURL.asc"
-			echo "$STATUSPREFIX"
-			echo "$STATUSPREFIX running MacPorts installer (may require Administrator password)"
-			echo "$STATUSPREFIX"
-			sudo installer -pkg "$PORTPKG" -target /
-			## TODO: check for installation errors
-			PATH="/opt/local/bin:$PATH"
+			if [ -x "/opt/local/bin/port" ]; then
+				## TODO: reinstall macports if needed for OS update
+				echo "$STATUSPREFIX MacPorts seemes to be installed, not reinstalling"
+			else
+				## MacPorts installation method adapted from https://excitedcuriosity.wordpress.com/2007/08/17/installing-macports-from-the-command-line/
+				## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
+				PORTVERSION="2.3.4"
+				## get OS version
+				OSVERSION=`remote bin/mac/version 2`
+				## get OS name
+				OSNAME=`remote bin/mac/flavor`
+				## construct URL
+				PORTPKG="MacPorts-$PORTVERSION-$OSVERSION-$OSNAME.pkg"
+				PKGURL="http://distfiles.macports.org/MacPorts/$PORTPKG"
+				## fetch installer package
+				echo "$STATUSPREFIX retrieving MacPorts installer: $PORTPKG from $PKGURL"
+				curl "$PKGURL" --output "$PORTPKG" -#
+				## TODO: check signature in "$PKGURL.asc"
+				echo "$STATUSPREFIX"
+				echo "$STATUSPREFIX running MacPorts installer (may require Administrator password)"
+				echo "$STATUSPREFIX"
+				sudo installer -pkg "$PORTPKG" -target /
+				## TODO: check for installation errors
+			fi
+			export PATH="/opt/local/bin:$PATH"
 			echo "$STATUSPREFIX"
 			echo "$STATUSPREFIX running MacPorts selfupdate routine (may require Administrator password)"
 			echo "$STATUSPREFIX"
