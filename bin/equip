@@ -29,7 +29,8 @@ function main {
 			## TODO: skip if developer tools already enabled
 			echo "$STATUSPREFIX Enabling developer tools (installer runs as a GUI app; may require Administrator password)"
 			## TODO: do this non-interactively
-			xcodebuild -license accept
+			#xcodebuild -license accept
+			xcode-select --install
 
 			if [ -x "/opt/local/bin/port" ]; then
 				## TODO: reinstall macports if needed for OS update
