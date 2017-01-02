@@ -79,8 +79,14 @@ function main {
 			echo "$STATUSPREFIX running MacPorts selfupdate routine (may require Administrator password)"
 			echo "$STATUSPREFIX"
 			sudo port selfupdate
-			## TODO: Install default list of ports
 
+			## TODO: Install default list of ports
+			## list must include gnubin
+			## form: cat portlist.tmp | xargs sudo port install
+
+			## TODO: clone project to get all files
+			##   see http://stackoverflow.com/a/11498124/776723
+			##    or http://stackoverflow.com/a/353830/776723 		
 			failout "UNIMPLEMENTED: equip shell under MacOS"
 			;;
 		*)
