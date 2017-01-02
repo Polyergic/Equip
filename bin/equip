@@ -29,7 +29,7 @@ function main {
 			## Check for developer tools as described in http://stackoverflow.com/a/15371967/776723
 			xcodepath=`xcode-select -p > /dev/null`
 			xcodecheck="$?"
-			if [ "0" == "$xcodecheck"]; then
+			if [ "0" == "$xcodecheck" ]; then
 				echo "$STATUSPREFIX Developer Tools are already enabled, not enabling"
 			else
 				if [ "2" != "$xcodecheck" ]; then
@@ -43,7 +43,7 @@ function main {
 				while true; do ## TODO: timeout
 					xcodepath=`xcode-select -p > /dev/null`
 					xcodecheck="$?"
-					if [ "0" == "$xcodecheck"]; then
+					if [ "0" == "$xcodecheck" ]; then
 						break
 					fi
 				done
