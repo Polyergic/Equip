@@ -19,7 +19,7 @@ function main {
 	### Get into bootstrap dir
 	echo "$STATUSPREFIX bootstrapping from $BOOTSTRAP"
 	mkdir -p "$BOOTSTRAP"
-	pushd "$BOOTSTRAP"  ## todo: hide output & test for failure
+	pushd "$BOOTSTRAP"  ## TODO: hide output & test for failure
 
 	### Check for a compatible platform
 	PLATFORM=`remote bin/platform`
@@ -80,22 +80,34 @@ function main {
 			echo "$STATUSPREFIX"
 			sudo port selfupdate
 
-			## TODO: Install default list of ports
-			## list must include gnubin
-			## form: cat portlist.tmp | xargs sudo port install
+			echo "$STATUSPREFIX Installing default MacPorts packages (may require Administrator password)"
+			sudo port install coreutils git
+			## When list gets too long, change to this form: cat portlist.tmp | xargs sudo port install
+			export PATH="/opt/local/libexec/gnubin:$PATH"
 
 			## TODO: clone project to get all files
 			##   see http://stackoverflow.com/a/11498124/776723
-			##    or http://stackoverflow.com/a/353830/776723 		
+			##    or http://stackoverflow.com/a/353830/776723
+			##  use ~/cache/shellac/...
+			
+			## TODO: Check for conflicts in ~/bin, ~/lib, etc
+			
+			## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
+			
+			## TODO: Update/reorganize login scripts
+			##  ... this should be a separate script that runs after every login
+			
 			failout "UNIMPLEMENTED: equip shell under MacOS"
 			;;
+
+			## TODO: setup sync with master host & default exclusions
 		*)
 			failout "FAILED!:  Unsupported platform $PLATFORM"
 			;;
 	esac
 
 	### Cleanup
-	popd ## todo: hide output & test for failure
+	popd ## TODO: hide output & test for failure
 	rm -rf "$BOOTSTRAP"
 }
 
