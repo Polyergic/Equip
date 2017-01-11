@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 ### This would go in a config, but we're bootstrapping
-GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
+REPO="https://github.com/Polyergic/Shellacc/"
+REMOTE="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
 CACHEDIR="$HOME/cache/shellac/v1/"
 STATUSPREFIX=" --------------- "
@@ -96,7 +97,7 @@ function main {
 	if [ ! -d "$CACHEDIR" ]; then
 		echo "$STATUSPREFIX Initializing & populating cache"
 		mkdir -p "$CACHEDIR"
-		git clone --depth=1 https://github.com/Polyergic/Shellacc/ "$CACHEDIR"
+		git clone --depth=1 "$REPO" "$CACHEDIR"
 	else
 		echo "$STATUSPREFIX Updating cache"
 		git -C "$CACHEDIR" pull --depth=1
@@ -123,7 +124,7 @@ function remote {
 	RELPATH="$1"
 	## TODO: if present, check for out of date
 	if [ ! -x "$RELPATH" ]; then
-		URL="$GITHUB""$RELPATH"
+		URL="$REMOTE""$RELPATH"
 		echo "$STATUSPREFIX retrieving $RELPATH from $URL" >&3
 		curl "$URL" --output "$RELPATH" --create-dirs -# -f
 		if [ ! -f "$RELPATH" ]; then
