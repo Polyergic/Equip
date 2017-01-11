@@ -104,14 +104,14 @@ function main {
 	fi
 			
 	## TODO: Check for conflicts in ~/bin, ~/lib, etc
+	failout "UNIMPLEMENTED: check for existing file conflicts"
 			
 	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
+	failout "UNIMPLEMENTED: install files from cache to $HOME"
 			
 	## TODO: Update/reorganize login scripts
 	##  ... this should be a separate script that runs after every login
-			
-	failout "UNIMPLEMENTED: install files from cache to $HOME"
-	;;
+	failout "UNIMPLEMENTED: update/reorganize login scripts"
 
 	## TODO: setup sync with master host & default exclusions
 
