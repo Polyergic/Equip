@@ -86,6 +86,7 @@ function main {
 			## When list gets too long, change to this form: cat portlist.tmp | xargs sudo port install
 			export PATH="/opt/local/libexec/gnubin:$PATH"
 
+			;;
 		*)
 			failout "FAILED!:  Unsupported platform $PLATFORM"
 			;;
