@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-### Yes we hardcode variables
+### This would go in a config, but we're bootstrapping
 GITHUB="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
 BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
+CACHEDIR="$HOME/cache/shellac/v1/"
 STATUSPREFIX=" --------------- "
 ERRORPREFIX=" =============== "
 set -eE
@@ -81,30 +82,36 @@ function main {
 			sudo port selfupdate
 
 			echo "$STATUSPREFIX Installing default MacPorts packages (may require Administrator password)"
-			sudo port install coreutils git
+			sudo port install coreutils git tree
 			## When list gets too long, change to this form: cat portlist.tmp | xargs sudo port install
 			export PATH="/opt/local/libexec/gnubin:$PATH"
 
-			## TODO: clone project to get all files
-			##   see http://stackoverflow.com/a/11498124/776723
-			##    or http://stackoverflow.com/a/353830/776723
-			##  use ~/cache/shellac/...
-			
-			## TODO: Check for conflicts in ~/bin, ~/lib, etc
-			
-			## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
-			
-			## TODO: Update/reorganize login scripts
-			##  ... this should be a separate script that runs after every login
-			
-			failout "UNIMPLEMENTED: equip shell under MacOS"
-			;;
-
-			## TODO: setup sync with master host & default exclusions
 		*)
 			failout "FAILED!:  Unsupported platform $PLATFORM"
 			;;
 	esac
+
+	## Clone project to cache all files
+	if [ ! -d "$CACHEDIR" ]; then
+		echo "$STATUSPREFIX Initializing & populating cache"
+		mkdir -p "$CACHEDIR"
+		git clone --depth=1 https://github.com/Polyergic/Shellacc/ "$CACHEDIR"
+	else
+		echo "$STATUSPREFIX Updating cache"
+		git -C "$CACHEDIR" pull --depth=1
+	fi
+			
+	## TODO: Check for conflicts in ~/bin, ~/lib, etc
+			
+	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
+			
+	## TODO: Update/reorganize login scripts
+	##  ... this should be a separate script that runs after every login
+			
+	failout "UNIMPLEMENTED: install files from cache to $HOME"
+	;;
+
+	## TODO: setup sync with master host & default exclusions
 
 	### Cleanup
 	popd ## TODO: hide output & test for failure
