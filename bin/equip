@@ -105,7 +105,7 @@ function main {
 	fi
 			
 	## Check for conflicts in ~/bin, ~/lib, etc
-	rsync -dvr "$CACHEDIR" "$HOME" --include=/bin --exclude=\*
+	rsync -nvr "$CACHEDIR" "$HOME" --include=/bin --exclude=\*
 			
 	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
 	failout "UNIMPLEMENTED: install files from cache to $HOME"
