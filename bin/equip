@@ -93,6 +93,8 @@ function main {
 			;;
 	esac
 
+	## TODO: check for previously installed files & changes to live versions
+
 	## Clone project to cache all files
 	if [ ! -d "$CACHEDIR" ]; then
 		echo "$STATUSPREFIX Initializing & populating cache"
@@ -100,11 +102,14 @@ function main {
 		git clone --depth=1 "$REPO" "$CACHEDIR"
 	else
 		echo "$STATUSPREFIX Updating cache"
-		#git -C "$CACHEDIR" pull --depth=1
-		git -C "$CACHEDIR" pull --depth=1 --update-shallow
+		## TODO: don't pull full commit history
+		git -C "$CACHEDIR" pull
+		#GITDATE=`git -C "$CACHEDIR" show -s --format=%ci`
+		#git -C "$CACHEDIR" pull --depth=1 --shallow-since="$GITDATE" ## Why doesn't this work?
 	fi
 			
 	## Check for conflicts in ~/bin, ~/lib, etc
+	echo "$STATUSPREFIX Checking for conflicts"
 	rsync -nvr "$CACHEDIR" "$HOME" --include=/bin --exclude=\*
 			
 	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
