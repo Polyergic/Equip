@@ -99,7 +99,9 @@ function main {
 	if [ ! -d "$CACHEDIR" ]; then
 		echo "$STATUSPREFIX Initializing & populating cache"
 		mkdir -p "$CACHEDIR"
-		git clone --depth=1 "$REPO" "$CACHEDIR"
+		## TODO: don't clone full commit history
+		git clone "$REPO" "$CACHEDIR"
+		#git clone --depth=1 "$REPO" "$CACHEDIR" ## This works but can't be updated
 	else
 		echo "$STATUSPREFIX Updating cache"
 		## TODO: don't pull full commit history
