@@ -7,7 +7,7 @@ BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
 CACHEDIR="$HOME/cache/shellac/v1/"
 STATUSPREFIX=" --------------- "
 ERRORPREFIX=" =============== "
-set -eE
+set -ET
 exec 3>&1 ## make stdout available in `captured` functions
 
 function main {
@@ -112,9 +112,17 @@ function main {
 			
 	## Check for conflicts in ~/bin, ~/lib, etc
 	echo "$STATUSPREFIX Checking for conflicts"
-	for source in ("bin","lib"); do
-
-	end
+	conflict=false
+	for source in "bin" "lib"; do
+		test_path "$CACHEDIR/$source" "$source"
+		test_result="$?"
+		if [ "0" != "$test_result" ]; then
+			conflict=true
+		fi
+	done
+	if [ "false" == "$conflict" ]; then
+		failout "UNIMPLEMENTED: conflicting files already exist and must be removed"
+	fi
 			
 	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
 	failout "UNIMPLEMENTED: install files from cache to $HOME"
@@ -154,6 +162,25 @@ function failout {
 	echo "$ERRORPREFIX Sorry about that."
 	echo "$ERRORPREFIX"	
 	exit 99
+}
+
+function test_path {
+	source="$1"
+	rel="$2"
+	dest="$HOME/$rel"
+	#echo "Testing path $dest"
+	if [ -e "$dest" ]; then
+		type=`remote lstat --type "$dest"`
+		echo "Type $type found for $dest"
+		case "$type" in
+			*)
+				echo "$ERRORPREFIX Unknown file type $type on file $dest"	
+				return 99
+				;;
+		esac
+	#else
+	#	echo "No conflict - Path not present: $dest"
+	fi
 }
 
 main
