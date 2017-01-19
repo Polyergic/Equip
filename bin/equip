@@ -112,7 +112,9 @@ function main {
 			
 	## Check for conflicts in ~/bin, ~/lib, etc
 	echo "$STATUSPREFIX Checking for conflicts"
-	rsync -nvr "$CACHEDIR" "$HOME" --include=/bin --exclude=\*
+	for source in ("bin","lib"); do
+
+	end
 			
 	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
 	failout "UNIMPLEMENTED: install files from cache to $HOME"
@@ -148,6 +150,9 @@ function failout {
 	echo "$ERRORPREFIX"
 	echo "$ERRORPREFIX $1" >&2
 	echo "$ERRORPREFIX"
+	echo "$ERRORPREFIX Equip failed; your shell may be partially equipped and/or horribly broken"
+	echo "$ERRORPREFIX Sorry about that."
+	echo "$ERRORPREFIX"	
 	exit 99
 }
 
