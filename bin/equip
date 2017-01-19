@@ -9,6 +9,8 @@ STATUSPREFIX=" --------------- "
 ERRORPREFIX=" =============== "
 set -ET
 exec 3>&1 ## make stdout available in `captured` functions
+copyroots=( "bin" "lib" )
+
 
 function main {
 	echo "=============================================================================="
@@ -109,22 +111,25 @@ function main {
 		#GITDATE=`git -C "$CACHEDIR" show -s --format=%ci`
 		#git -C "$CACHEDIR" pull --depth=1 --shallow-since="$GITDATE" ## Why doesn't this work?
 	fi
-			
-	## Check for conflicts in ~/bin, ~/lib, etc
+	
+	## Check for conflicts with files to install
 	echo "$STATUSPREFIX Checking for conflicts"
 	conflict=false
-	for source in "bin" "lib"; do
+	for source in "${copyroots[@]}"; do
 		test_path "$CACHEDIR/$source" "$source"
 		test_result="$?"
 		if [ "0" != "$test_result" ]; then
 			conflict=true
 		fi
 	done
-	if [ "false" == "$conflict" ]; then
-		failout "UNIMPLEMENTED: conflicting files already exist and must be removed"
+	if [ "false" != "$conflict" ]; then
+		failout "FAILED!: Conflicting files already exist and must be removed"
 	fi
 			
-	## TODO: Populate ~/bin, ~/lib, etc from ~/cache/shellac/...
+	## Install by copying files
+	echo "$STATUSPREFIX Installing files"
+	cmd="cp -nPR --preserve=all -v '$copyroots' $HOME"
+	echo "$cmd"
 	failout "UNIMPLEMENTED: install files from cache to $HOME"
 			
 	## TODO: Update/reorganize login scripts
