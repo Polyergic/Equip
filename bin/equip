@@ -128,9 +128,19 @@ function main {
 			
 	## Install by copying files
 	echo "$STATUSPREFIX Installing files"
-	cmd="cp -nPR --preserve=all -v '$copyroots' $HOME"
-	echo " > $cmd"
-	$cmd
+	errors=false
+	for source in "${copyroots[@]}"; do
+		cmd="cp -nPR --preserve=all -v \"$CACHEDIR/$source\" $HOME"
+		echo " > $cmd"
+		$cmd
+		copy_result="$?"
+		if [ "0" != "$copy_result" ]; then
+			errors=true
+		fi
+	done
+	if [ "false" != "$errors" ]; then
+		failout "FAILED!: Errors encountered while installing files"
+	fi
 			
 	## TODO: Update/reorganize login scripts
 	##  ... this should be a separate script that runs after every login
