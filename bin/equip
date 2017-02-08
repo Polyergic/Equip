@@ -129,8 +129,8 @@ function main {
 	## Install by copying files
 	echo "$STATUSPREFIX Installing files"
 	cmd="cp -nPR --preserve=all -v '$copyroots' $HOME"
-	echo "$cmd"
-	failout "UNIMPLEMENTED: install files from cache to $HOME"
+	echo " > $cmd"
+	$cmd
 			
 	## TODO: Update/reorganize login scripts
 	##  ... this should be a separate script that runs after every login
