@@ -132,7 +132,7 @@ function main {
 	for source in "${copyroots[@]}"; do
 		cmd="cp -nPR --preserve=all -v \"$CACHEDIR/$source\" $HOME"
 		echo " > $cmd"
-		$cmd
+		bash -c "$cmd"
 		copy_result="$?"
 		if [ "0" != "$copy_result" ]; then
 			errors=true
