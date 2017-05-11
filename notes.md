@@ -1,8 +1,10 @@
 # Paths
 
-A weak suggestion for an FHS-like allocation of paths in $HOME
+Equip uses these paths
 
 - `~/bin` - executable commands
+
+- `~/bin/$platform` - platform-specific executable commands
 
 - `~/lib` - library code used by commands in ~/bin
 
@@ -29,3 +31,15 @@ A weak suggestion for an FHS-like allocation of paths in $HOME
   - Does not separate config from state
 
   - No mechanism for multiple hosts
+
+# Future stuff
+
+- bootstrap script needs to accept a parameter for a virtual package to install (including repository)
+  - so configurations can be distributed by a single command with appropriate parameters
+
+- Allow multiple simultanious versions (with command selection)
+
+- Windows bootstrap script that does not require cygwin to be preinstalled
+
+- Allow configuration of paths used?
+

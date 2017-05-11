@@ -1,27 +1,41 @@
-# Shellacc
+# Equip
 
-The "Shell Accoutrements" I use on all of my computers.
+Tool to equip your shell with the things you need.
 
-This is here in part to simplify replicating my setup on new computers and trmporary VMs, and in part to share the useful solutions with whoever may benefit.
+Acts as a package manager to install its own packages for a specific user, and as a frontend to identify necessary system packages on any supported system and install them if privleges are available.
+
+Equip is intended to be compatible with a `$HOME` which is synchronized across several computers (e.g. with [Unison](https://www.cis.upenn.edu/~bcpierce/unison/)) not necessarily running the same host OS.
+
+This is a spinoff of my effort to simplify replicating my setup on new computers and temporary VMs, as well as to share the useful solutions with whomever may benefit.  It separates the mechanisms used for replication from the tools and configurations to be replicated.
 
 ## What's included
 
-This is an eclectic set of commands, settings, and configurations that I use on my personal computers.  Most of what's included is my own creations, including many trivial helpers, and many scripts that took nontrivial work but didn't warrant publication as a separate project.  Some of what's included is copied or derived from various sources throughout the internet, and I've attempted to link to sources wherever possible.  If you find an error or omission please create an issue in this repository.
+This is a sort of package manager, the packages for which can specify to install files under your `$HOME` or to use the system package manager to install system packages.
+
+## Supported Systems
+
+Because packages may include information about installing system packages, it is possible for a repository to not support for some systems which are supported by Equip itself, or for a package to represent functionality which is not available on some systems which are otherwise supported.  It is not possible to provide a universal solution to this problem, so even supported systems may not always behave as expected.
+
+Primary development is done on MacOS, where [MacPorts](https://www.macports.org/) is used as a system package manager.  Support of MacOS is beginning to be implemented.
+
+Testing will be done on at least OpenSUSE and CentOS, and maybe be done on other Linux distributions.  Support of Linux distributions is currently nonexistent, is planned for at least 2 distributions, and may be expanded.
+
+Testing will be done on Windows with Cygwin
 
 ## Installation
 
-Once implemented, you'll be able to "equip" almost any bash shell using this command:
+Once implemented, you'll be able to "equip" a shell on MacOS, some Linuxes, and Cygwin with this command:
 
-    curl -f -# https://raw.githubusercontent.com/Polyergic/Shellacc/master/bin/equip | bash
+    curl -f -# https://raw.githubusercontent.com/Polyergic/Equip/master/bin/equip-bootstrap | bash
 
-Someday you'll be able to selectively apply the settings and configurations you want to adopt.
+This will install all necessary system packages (or give instructions for doing so if privleges are not available), and do some rearranging of your shell configuration files to make them modular and ensure that installed tools are in your path.  On MacOS this will install MacPorts, and use it to install some of the necessary "system" packages (or give instructions for doing so if privleges are not available).
 
 ## Licensing
 
 New work in this repository is licensed under [AGPLv3](https://www.gnu.org/licenses/agpl-3.0.en.html) (see file `LICENSE`):
 
-> Shellacc - The "Shell Accoutrements" I use on all of my computers. <br/>
-> Copyright (c) 2016 Shad Sterling
+> Equip - Tool to equip your shell with the things you need. <br/>
+> Copyright (c) 2017 Shad Sterling
 > 
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU Affero General Public License as
@@ -45,9 +59,3 @@ Adopted and derived portions are used under their original license:
 -->
 
 Please create issues in this repository to report any errors in licensing or attribution.
-
-## Current Status:
-
-### MacOS
-
-Installs [MacPorts](https://www.macports.org/)
