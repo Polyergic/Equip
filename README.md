@@ -2,15 +2,11 @@
 
 Tool to equip your shell with the things you need.
 
-Acts as a package manager to install its own packages for a specific user, and as a frontend to identify necessary system packages on any supported system and install them if privleges are available.
+This is a sort of package manager, the packages for which can specify to install files under your `$HOME` or to use the system package manager to install system packages.  System packages will be installed when privleges are available, otherwise instructions will be generated which a privledged user can follow to install them.
 
 Equip is intended to be compatible with a `$HOME` which is synchronized across several computers (e.g. with [Unison](https://www.cis.upenn.edu/~bcpierce/unison/)) not necessarily running the same host OS.
 
 This is a spinoff of my effort to simplify replicating my setup on new computers and temporary VMs, as well as to share the useful solutions with whomever may benefit.  It separates the mechanisms used for replication from the tools and configurations to be replicated.
-
-## What's included
-
-This is a sort of package manager, the packages for which can specify to install files under your `$HOME` or to use the system package manager to install system packages.
 
 ## Supported Systems
 
