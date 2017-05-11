@@ -1,6 +1,6 @@
 # Paths
 
-Equip uses these paths
+When Equip installs a package directly, it will write to a limited set of paths.  Packages should follow the same convention.  (Paths below are not final.)
 
 - `~/bin` - executable commands
 
@@ -8,15 +8,15 @@ Equip uses these paths
 
 - `~/lib` - library code used by commands in ~/bin
 
-- `~/lib/$name/data` - static data used by the $name library
+- `~/lib/$name/$version/data` - static data used by the $name library
 
-- `~/etc` - configurations
+- `~/etc/$name` - configurations
 
-- `~/var` - persistent state information (usually not safe to delete)
+- `~/var/$name` - persistent state information (usually not safe to delete)
 
 - `~/tmp` - transient state information (automatically deleted at reboot)
 
-- `~/cache` - cached data (safe to delete when program is not running)
+- `~/cache/$name` - cached data (safe to delete when program is not running)
 
 - `~/hosts/$HOSTNAME/$above` - host-specific variants of above
 
@@ -35,7 +35,7 @@ Equip uses these paths
 # Future stuff
 
 - bootstrap script needs to accept a parameter for a virtual package to install (including repository)
-  - so configurations can be distributed by a single command with appropriate parameters
+  - so complete configurations can be distributed by a single command with appropriate parameters
 
 - Allow multiple simultanious versions (with command selection)
 
