@@ -24,7 +24,7 @@ Once implemented, you'll be able to "equip" a shell on MacOS, some Linuxes, and 
 
     curl -f -# https://raw.githubusercontent.com/Polyergic/Equip/master/bin/equip-bootstrap | bash
 
-This will install all necessary system packages (or give instructions for doing so if privleges are not available), and do some rearranging of your shell configuration files to make them modular and ensure that installed tools are in your path.  On MacOS this will install MacPorts, and use it to install some of the necessary "system" packages (or give instructions for doing so if privleges are not available).
+This will install all necessary system packages, and do some rearranging of your shell configuration files to make them modular and ensure that installed tools are in your path.  On MacOS this will install MacPorts, use it to install some of the necessary "system" packages, and override some native BSD-style commands with their GNU counterparts.
 
 ## Licensing
 
