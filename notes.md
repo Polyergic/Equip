@@ -34,6 +34,17 @@ Files in `tmp`, `cache`, and `hosts` are assumed to be host specific.  It is ass
 
   - No mechanism for multiple hosts
 
+# Types of functionality
+
+- Commands as Executable files
+- Commands as Aliases
+- Commands as Bash Functions
+- Library dependencies of commands
+- Environment
+- Session start actions
+- Session end actions
+- Scheduled actions
+
 # Equip's Own Files
 
 ## Configuration
@@ -76,10 +87,21 @@ These can be provided by hooks:
 
 # Future stuff
 
+- automated repository creation/maintenence
+  - so I can hack in my own `~/bin` and publish changes with one or two commands
+  - automated version incrementing? YYYY.MM.DD.count?
+
+- portable dependency bundles (similar to [npm](https://www.npmjs.com/)/[yarn](https://yarnpkg.com/) or [bundler](http://bundler.io/))
+  - so I can update the helpers used by Equip's bootstrap 
+
 - bootstrap script needs to accept a parameter for a virtual package to install (including repository)
   - so complete configurations can be distributed by a single command with appropriate parameters
 
 - Allow multiple simultanious versions (with command selection)
+
+- Install via npm/etc?
+
+- Uninstall?  (Not uninstall a package, but uninstall Equip)
 
 - Windows bootstrap script that does not require cygwin to be preinstalled
 

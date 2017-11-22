@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 ### This would go in a config, but we're bootstrapping
-REPO="https://github.com/Polyergic/Shellacc/"
-REMOTE="https://raw.githubusercontent.com/Polyergic/Shellacc/master/"
-BOOTSTRAP="$HOME/tmp/shellac-equip-bootstrap/"
-CACHEDIR="$HOME/cache/shellac/v1/"
+REPO="https://github.com/Polyergic/Equip/"
+REMOTE="https://raw.githubusercontent.com/Polyergic/Equip/master/"
+BOOTSTRAP="$HOME/tmp/equip-bootstrap/"
+CACHEDIR="$HOME/cache/equip/v1/"
 STATUSPREFIX=" --------------- "
 ERRORPREFIX=" =============== "
 set -ET
@@ -15,7 +15,7 @@ copyroots=( "bin" "lib" )
 function main {
 	echo "=============================================================================="
 	echo "==============="
-	echo "===============     Shell Accoutrements: Attempting to equip this shell..."
+	echo "===============     Shell Equipment: Attempting to equip this shell..."
 	echo "==============="
 	echo "=============================================================================="
 	### TODO: check for existance of /usr/bin/env, bash, curl, etc...
@@ -60,7 +60,7 @@ function main {
 			else
 				## MacPorts installation method adapted from https://excitedcuriosity.wordpress.com/2007/08/17/installing-macports-from-the-command-line/
 				## TODO: get latest version by parsing http://distfiles.macports.org/MacPorts/
-				PORTVERSION="2.3.4"
+				PORTVERSION="2.4.1"
 				## get OS version
 				OSVERSION=`remote bin/mac/version 2`
 				## get OS name

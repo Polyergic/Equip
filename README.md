@@ -2,11 +2,11 @@
 
 Tool to equip your shell with the things you need.
 
-This is a sort of package manager, the packages for which can specify to install files under your `$HOME` or to use the system package manager to install system packages.  System packages will be installed when privleges are available, otherwise instructions will be generated which a privledged user can follow to install them.
+This is a sort of package manager, the packages for which can specify to install files under your `$HOME`, to use the system package manager to install system packages, or to use another package system such as [npm](https://www.npmjs.com/)/[yarn](https://yarnpkg.com/).  System packages will be installed when privleges are available, otherwise instructions will be generated which a privledged user can follow to install them.
 
 Equip is intended to be compatible with a `$HOME` which is synchronized across several computers (e.g. with [Unison](https://www.cis.upenn.edu/~bcpierce/unison/)) not necessarily running the same host OS.
 
-This is a spinoff of my effort to simplify replicating my setup on new computers and temporary VMs, as well as to share the useful solutions with whomever may benefit.  It separates the mechanisms used for replication from the tools and configurations to be replicated.
+This is a spinoff of my effort to simplify replicating my personal setup on new computers and temporary VMs, as well as to share useful solutions with whomever may benefit.  It separates the mechanisms used for replication from the tools and configurations to be replicated.
 
 ## Supported Systems
 
