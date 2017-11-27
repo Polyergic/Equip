@@ -67,17 +67,27 @@ Contains JSON array of repo URLs
 
 ## Repository entry
 
-`$name-$timestamp.json`
+`$reporoot/$name/$timestamp/equip.json`
 
 JSON object with the following properties
 
-- `cmd` -- describes the file `~/bin/$name`, and/or files `~/bin/$platform/$name`, and/or `~/bin/$name-$subname`
-- `lib` -- describes the directory `~/lib/$name` and/or directories `~/bin/$platform/$name`
-- `cfg` -- describes the directory `~/etc/$name` and/or files in directories `~/etc/$othername/$hook/$name`
-- `native` -- describes packages to install with the system package manager
-- `deps` -- equipment without which this piece will not work
+- `equip` -- repo entry spec version
+- `name` -- name of this package
+- `timestamp` -- timestamp of this revision of this package
+- `external` -- describes packages to install with an external package manager (e.g. the system package manager, npm, etc)
+- `commands` -- describes commands provided (available in the shell environment, for users and other packages)
+  - the files `~/bin/$name` or `~/bin/$platform/$name`, or alias `$name`, or function `$name`
+  - the files `~/bin/$name-$subname` and/or `~/bin/$platform/$name-$subname`, and/or aliases `$name-$subname`, and/or functions `$name-$subname`
+- `libs` -- describes libraries provided (available as files only, for develpers and other packages)
+  - files in the directory `~/lib/$name` and/or directories `~/bin/$platform/$name`
+- `config` -- describes the initial configuration, stored in directory `~/etc/$name`
+- `events` -- describes events provided by this package that can be handled by other packages
+  - directories named `~/etc/$name/$event`
+- `handlers` -- describes handlers for events provided by other packages
+  - files in directories `~/etc/$othername/$event/$name`
+- `deps` -- lists packages without which this package will not work
 
-These can be provided by hooks:
+These can be provided by events:
 - path additions
 - bash aliases
 - bash functions

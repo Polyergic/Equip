@@ -1,0 +1,35 @@
+{
+	"equip": 0,
+	"name": "path",
+	"timestamp": "0",
+	"commands": {
+		"all": {
+			"path":            { "type": "alias", "desc": "show current path", "alias": "echo $PATH" },
+			"path-test":       { "type": "file",  "desc": "check dir inclusion in current path" },
+			"path-find":       { "type": "file",  "desc": "find index of dir in current path" },
+			"path-get":        { "type": "file",  "desc": "get dir at index in current path" },
+			"path-add":        { "type": "file",  "desc": "add to current path given --first, --last, etc" },
+			"path-add-first":  { "type": "file",  "desc": "make dir the first entry in path" },
+			"path-add-last":   { "type": "file",  "desc": "make dir the last entry in path" },
+			"path-add-before": { "type": "file",  "desc": "make dir appear in path before otherdir" },
+			"path-add-after":  { "type": "file",  "desc": "make dir appear in path after otherdir" },
+			"path-push":       { "type": "file",  "desc": "make dir the last entry in path" },
+			"path-pop":        { "type": "file",  "desc": "remove & echo last entry in current path" },
+			"path-unshift":    { "type": "file",  "desc": "make dir the first entry in path" },
+			"path-shift":      { "type": "file",  "desc": "remove & echo first entry in current path" },
+			"path-insert":     { "type": "file",  "desc": "make dir appear at index in path (other entries move)" },
+			"path-set":        { "type": "file",  "desc": "make dir appear at index in path (existing entry is replaced)" },
+			"path-replace":    { "type": "file",  "desc": "replace olddir in path with newdir" },
+			"path-rm":         { "type": "file",  "desc": "remove dir at index in path" }
+		}
+	},
+	"events": {
+		"sessionstart": { "desc": "paths to include when setting path for new bash session" }
+	},
+	"handlers": {
+		"bash": { "sessionstart": { "type": "file",  "desc": "set path for new bash session" } }
+	},
+	"deps": [
+		"bash"
+	]
+}
