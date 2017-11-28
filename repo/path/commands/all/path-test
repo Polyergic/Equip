@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+EX_SUCCESS=0
+EX_NEGATIVE=3
+EX_USAGE=64
+
+if [ "" == "$1" -o "" != "$2" ]; then
+	echo "$0 -- Test whether a single directory is in the current path"
+	echo "e.g. $0 /bin"
+	echo "Output: \"true\" when path is included, \"false\" otherwise"
+	echo "Exit Code: $EX_SUCCESS when path is included, $EX_NEGATIVE otherwise"
+	exit $EX_USAGE
+else
+	if [[ ":$PATH:" == *":$1:"* ]]; then
+		echo "true"
+		exit $EX_SUCCESS
+	else
+		echo "false"
+		exit $EX_NEGATIVE
+	fi
+fi

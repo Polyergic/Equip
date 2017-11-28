@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+EX_SUCCESS=0
+EX_NEGATIVE=3
+
+REPODIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" # from https://stackoverflow.com/a/246128/776723
+
+PATH="TESTPATHFIRST:$REPODIR/commands/all:TESTPATHMIDDLE:$PATH:TESTPATHLAST"
+fails="false"
+
+#echo "Testing with REPODIR=$REPODIR"
+#echo "Testing with PATH=$PATH"
+hash -r
+
+echo "Testing path-test at `which path-test`"
+
+o=`path-test "TESTPATHFIRST"`
+r=$?
+echo $o
+echo $r
+if [ "true" != "$o" ]; then fails="true"; fi
+if [ "0" != "$r" ]; then fails="true"; fi
+
+o=`path-test "TESTPATHMIDDLE"`
+r=$?
+echo $o
+echo $r
+if [ "true" != "$o" ]; then fails="true"; fi
+if [ "0" != "$r" ]; then fails="true"; fi
+
+o=`path-test "TESTPATHLAST"`
+r=$?
+echo $o
+echo $r
+if [ "true" != "$o" ]; then fails="true"; fi
+if [ "0" != "$r" ]; then fails="true"; fi
+
+o=`path-test "TESTPATHMISSING"`
+r=$?
+echo $o
+echo $r
+if [ "false" != "$o" ]; then fails="true"; fi
+if [ "3" != "$r" ]; then fails="true"; fi
+
+if [ "$fails" == "false" ]; then
+	echo "All tests passed!"
+	exit $EX_SUCCESS
+else
+	echo "Some tests failed"
+	exit $EX_NEGATIVE
+fi
+

@@ -95,7 +95,22 @@ These can be provided by events:
 - login/logout actions
 - scheduled tasks
 
+# Exit codes
+
+Valid packages follow these conventions for exit codes (including representing ERRNO values as exit codes)
+
+Sources
+- as-yet unpublished ipcrw project
+- https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h
+
+0:  EX_SUCCESS:  No Error (positive result)
+3:  EX_NEGATIVE: Negative result (no error)
+64: EX_USAGE:    Usage error
+
+
 # Future stuff
+
+- Exit codes as a library for scripts
 
 - automated repository creation/maintenence
   - so I can hack in my own `~/bin` and publish changes with one or two commands
